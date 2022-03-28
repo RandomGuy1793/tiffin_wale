@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import ProtectedRoute from "./components/protectedRoute";
@@ -13,62 +13,61 @@ import NotFound from "./components/notFound";
 
 import "./App.css";
 
-class App extends Component {
-  state = { isLoggedIn: false, isCustomer: true, token: null };
+function App() {
+  const [state, setState] = useState({
+    isLoggedIn: false,
+    isCustomer: true,
+    token: null,
+  });
 
-  handleToken = (token, isCustomer) => {
-    const state = { ...this.state };
-    state.isLoggedIn = true;
-    state.isCustomer = isCustomer;
-    state.token = token;
-    this.setState(state);
+  const handleToken = (token, isCustomer) => {
+    const currState = { ...state };
+    currState.isLoggedIn = true;
+    currState.isCustomer = isCustomer;
+    currState.token = token;
+    setState(currState);
   };
 
-  render() {
-    return (
-      <React.Fragment>
-        <NavBar
-          isLoggedIn={this.state.isLoggedIn}
-          isCustomer={this.state.isCustomer}
+  return (
+    <React.Fragment>
+      <NavBar isLoggedIn={state.isLoggedIn} isCustomer={state.isCustomer} />
+      <Routes>
+        <Route path="/customer" element={<CustomerHome />} />
+
+        <Route
+          path="/tiffin-vendor"
+          element={
+            <ProtectedRoute
+              isLoggedIn={state.isLoggedIn}
+              isCustomer={state.isCustomer}
+            >
+              <TiffinVendorHome />
+            </ProtectedRoute>
+          }
         />
-        <Routes>
-          <Route path="/customer" element={<CustomerHome />} />
 
-          <Route
-            path="/tiffin-vendor"
-            element={
-              <ProtectedRoute
-                isLoggedIn={this.state.isLoggedIn}
-                isCustomer={this.state.isCustomer}
-              >
-                <TiffinVendorHome />
-              </ProtectedRoute>
-            }
-          />
+        <Route path="/" element={<CustomerHome />} />
+        <Route
+          path="/customer/login"
+          element={<CustomerLogin updateToken={handleToken} />}
+        />
+        <Route
+          path="/customer/register"
+          element={<CustomerRegister updateToken={handleToken} />}
+        />
+        <Route
+          path="/tiffin-vendor/login"
+          element={<TiffinVendorLogin updateToken={handleToken} />}
+        />
+        <Route
+          path="/tiffin-vendor/register"
+          element={<TiffinVendorRegister updateToken={handleToken} />}
+        />
 
-          <Route path="/" element={<CustomerHome />} />
-          <Route
-            path="/customer/login"
-            element={<CustomerLogin updateToken={this.handleToken} />}
-          />
-          <Route
-            path="/customer/register"
-            element={<CustomerRegister updateToken={this.handleToken} />}
-          />
-          <Route
-            path="/tiffin-vendor/login"
-            element={<TiffinVendorLogin updateToken={this.handleToken} />}
-          />
-          <Route
-            path="/tiffin-vendor/register"
-            element={<TiffinVendorRegister updateToken={this.handleToken} />}
-          />
-
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </React.Fragment>
-    );
-  }
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </React.Fragment>
+  );
 }
 
 export default App;

@@ -1,10 +1,7 @@
-import React, { Component } from 'react';
+import React from "react";
 
-class CustomerHome extends Component {
-    state = {  } 
-    render() { 
-        return (<h1>Customer Home</h1>);
-    }
+function CustomerHome(props) {
+  return <h1>Customer Home</h1>;
 }
- 
+
 export default CustomerHome;

@@ -1,23 +1,19 @@
-import React, { Component } from 'react';
+import React from "react";
 
-class FormInput extends Component {
-    state = {  } 
-    render() { 
-        const {type, value, name, onChange, error}=this.props
-        return (
-            <div className="form-group">
-              <input
-                name={name}
-                type={type}
-                value={value}
-                className="form-control"
-                placeholder={name}
-                onChange={onChange}
-              />
-              {error ? <div className="alert alert-danger">{error}</div> : <h1></h1>}
-            </div>
-        );
-    }
+function FormInput(props) {
+  const { type, value, name, onChange } = props;
+  return (
+    <div className="form-group">
+      <input
+        name={name}
+        type={type}
+        value={value}
+        className="form-control mb-2"
+        placeholder={name}
+        onChange={onChange}
+      />
+    </div>
+  );
 }
- 
+
 export default FormInput;
