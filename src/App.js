@@ -11,42 +11,60 @@ import TiffinVendorRegister from "./components/tiffinVendorRegister";
 import NavBar from "./components/navBar";
 import NotFound from "./components/notFound";
 
+import config from "./config.json";
 import "./App.css";
 
 function App() {
-  const [state, setState] = useState({
+  const defaultState = {
     isLoggedIn: false,
     isCustomer: true,
     token: null,
-  });
+  };
+
+  const getInitialState = () => {
+    let localStorageState = localStorage.getItem(config.localStorageKey);
+    if (localStorageState) localStorageState = JSON.parse(localStorageState);
+    const initialState = localStorageState || defaultState;
+    return initialState;
+  };
+
+  const [state, setState] = useState({ ...getInitialState() });
 
   const handleToken = (token, isCustomer) => {
+    if (token === null) {
+      setState({ ...getInitialState() });
+      return;
+    }
     const currState = { ...state };
     currState.isLoggedIn = true;
     currState.isCustomer = isCustomer;
     currState.token = token;
+    localStorage.setItem(config.localStorageKey, JSON.stringify(currState));
     setState(currState);
   };
 
   return (
     <React.Fragment>
-      <NavBar isLoggedIn={state.isLoggedIn} isCustomer={state.isCustomer} />
+      <NavBar auth={state} updateToken={handleToken} />
       <Routes>
-        <Route path="/customer" element={<CustomerHome />} />
+        <Route
+          path="/customer"
+          element={<CustomerHome auth={state} updateToken={handleToken} />}
+        />
 
         <Route
           path="/tiffin-vendor"
           element={
-            <ProtectedRoute
-              isLoggedIn={state.isLoggedIn}
-              isCustomer={state.isCustomer}
-            >
-              <TiffinVendorHome />
+            <ProtectedRoute auth={state}>
+              <TiffinVendorHome auth={state} />
             </ProtectedRoute>
           }
         />
 
-        <Route path="/" element={<CustomerHome />} />
+        <Route
+          path="/"
+          element={<CustomerHome auth={state} updateToken={handleToken} />}
+        />
         <Route
           path="/customer/login"
           element={<CustomerLogin updateToken={handleToken} />}

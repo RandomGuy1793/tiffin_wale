@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+import { getName } from "./services/vendorService";
 
 function TiffinVendorHome(props) {
-  return <h1>Tiffin Vendor Home</h1>;
+  const [name, setName] = useState("");
+  const { token } = props.auth;
+
+  useEffect(() => {
+    const businessName = getName(token);
+    if (businessName) setName(businessName);
+  }, [token]);
+
+  return (
+    <React.Fragment>
+      <h1>{`Hello ${name}`}</h1>
+    </React.Fragment>
+  );
 }
 
 export default TiffinVendorHome;

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "./services/axios";
-import _ from "lodash";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import config from "../config.json";
+import { registerCustomer as register } from "./services/customerService";
 import FormInput from "./common/formInput";
 
 import "../styles/auth.css";
@@ -29,23 +28,9 @@ function CustomerRegister(props) {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    const cust = { ...customer };
-    const customerToSend = _.pick(cust, ["name", "email", "password"]);
-    customerToSend.address = _.pick(cust, ["area", "city", "pincode"]);
-    let res;
-    try {
-      res = await axios.post(
-        `${config.apiUrl}/customer/register`,
-        customerToSend
-      );
-    } catch (error) {
-      if (!error.response || error.response.status >= 500) return; // not resend toast if already toasted in axios interceptor
-      const err = { ...error };
-      err.response.data = err.response.data.replace("address.", "");
-      return toast.error(err.response.data);
-    }
-    props.updateToken(res.headers["x-auth-token"], true);
-    navigate("/customer");
+    const result = await register(customer, props.updateToken);
+    if (result === true) navigate("/customer");
+    else if (result) toast.error(result.data);
   };
   return (
     <div className="card shadow-lg">
