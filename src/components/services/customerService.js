@@ -12,7 +12,19 @@ export function getName(token) {
   }
 }
 
-export async function getCustomer(token) {}
+export async function getCustomer(token) {
+  try {
+    const res = await axios.get(`${config.apiUrl}/customer`, {
+      headers: {
+        "x-auth-token": token,
+      },
+    });
+    return res;
+  } catch (ex) {
+    if (ex===null) return null;
+    return false;
+  }
+}
 
 export async function loginCustomer(customer, updateToken) {
   try {
@@ -20,7 +32,7 @@ export async function loginCustomer(customer, updateToken) {
     updateToken(res.headers["x-auth-token"], true);
     return true;
   } catch (ex) {
-    if (!ex.response || ex.response.status >= 500) return null;
+    if (ex===null) return null;
     return ex.response;
   }
 }
@@ -36,7 +48,7 @@ export async function registerCustomer(customer, updateToken) {
     updateToken(res.headers["x-auth-token"], true);
     return true;
   } catch (ex) {
-    if (!ex.response || ex.response.status >= 500) return null;
+    if (ex===null) return null;
     ex.response.data = ex.response.data.replace("address.", "");
     return ex.response;
   }

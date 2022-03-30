@@ -11,7 +11,19 @@ export function getName(token) {
   }
 }
 
-export async function getTiffinVendor(token) {}
+export async function getTiffinVendor(token) {
+  try {
+    const res = await axios.get(`${config.apiUrl}/tiffin-vendor`, {
+      headers: {
+        "x-auth-token": token,
+      },
+    });
+    return res;
+  } catch (ex) {
+    if (ex===null) return null;
+    return false;
+  }
+}
 
 export async function loginTiffinVendor(tiffinVendor, updateToken) {
   try {
@@ -22,7 +34,7 @@ export async function loginTiffinVendor(tiffinVendor, updateToken) {
     updateToken(res.headers["x-auth-token"], false);
     return true;
   } catch (ex) {
-    if (!ex.response || ex.response.status >= 500) return null;
+    if (ex===null) return null;
     return ex.response;
   }
 }
@@ -58,7 +70,7 @@ export async function registerTiffinVendor(tiffinVendor, updateToken) {
     updateToken(res.headers["x-auth-token"], false);
     return true;
   } catch (ex) {
-    if (!ex.response || ex.response.status >= 500) return null;
+    if (ex===null) return null;
     ex.response.data = ex.response.data.replace(
       "businessName",
       "business name"
@@ -81,6 +93,18 @@ export async function registerTiffinVendor(tiffinVendor, updateToken) {
     ex.response.data = ex.response.data.replace("breakfast", "breakfast items");
     ex.response.data = ex.response.data.replace("lunch", "lunch items");
     ex.response.data = ex.response.data.replace("dinner", "dinner items");
+    return ex.response;
+  }
+
+}
+
+export async function getTiffinVendors(query){
+  try{
+    let res;
+    isNaN(query) ? res=await axios.get(`${config.apiUrl}/tiffin-vendor/city/${query}`) : res=await axios.get(`${config.apiUrl}/tiffin-vendor/pincode/${query}`)
+    return res.data
+  } catch(ex){
+    if (ex===null) return null;
     return ex.response;
   }
 }

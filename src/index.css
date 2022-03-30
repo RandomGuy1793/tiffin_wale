@@ -14,11 +14,11 @@ code {
     monospace;
 }
 
-.btn-primary{
+.btn-primary {
   background-color: rgb(62, 174, 248);
   border-color: rgb(62, 174, 248);
 }
-.btn-primary:hover{
+.btn-primary:hover {
   background-color: rgb(0, 153, 255);
   border-color: rgb(0, 153, 255);
 }
@@ -33,6 +33,12 @@ code {
   text-decoration: none;
 }
 
-.pointer{
+.pointer {
   cursor: pointer;
+}
+
+.greeting {
+  text-align: left;
+  padding: 1.3rem 3rem;
+  color: rgb(245, 244, 244);
 }
