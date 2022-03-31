@@ -54,7 +54,12 @@ function NavBar(props) {
           {isLoggedIn && isCustomer ? (
             <ul className="navbar-nav ml-auto justify-content">
               <button className="nav-link btn">Subscriptions</button>
-              <button className="nav-link btn">Edit Details</button>
+              <button
+                className="nav-link btn"
+                onClick={() => navigate("/customer/edit")}
+              >
+                Edit Details
+              </button>
               <button className="nav-link btn" onClick={logOut}>
                 Logout
               </button>
@@ -65,7 +70,12 @@ function NavBar(props) {
           {isLoggedIn && !isCustomer ? (
             <ul className="navbar-nav ml-auto justify-content">
               <button className="nav-link btn">Customer subscriptions</button>
-              <button className="nav-link btn">Edit Details</button>
+              <button
+                className="nav-link btn"
+                onClick={() => navigate("/tiffin-vendor/edit")}
+              >
+                Edit Details
+              </button>
               <button className="nav-link btn" onClick={logOut}>
                 Logout
               </button>

@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import ProtectedRoute from "./components/protectedRoute";
 import CustomerHome from "./components/customerHome";
 import CustomerLogin from "./components/customerLogin";
 import CustomerRegister from "./components/customerRegister";
+import CustomerEditDetails from "./components/customerEditDetails";
 import TiffinVendorHome from "./components/tiffinVendorHome";
 import TiffinVendorLogin from "./components/tiffinVendorLogin";
 import TiffinVendorRegister from "./components/tiffinVendorRegister";
+import TiffinVendorEditDetails from "./components/tiffinVendorEditDetails";
 import NavBar from "./components/navBar";
 import NotFound from "./components/notFound";
 
@@ -46,23 +49,14 @@ function App() {
   return (
     <React.Fragment>
       <NavBar auth={state} updateToken={handleToken} />
+      <ToastContainer />
       <Routes>
         <Route
-          path="/customer"
+          path="/"
           element={<CustomerHome auth={state} updateToken={handleToken} />}
         />
-
         <Route
-          path="/tiffin-vendor"
-          element={
-            <ProtectedRoute auth={state}>
-              <TiffinVendorHome auth={state} />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/"
+          path="/customer"
           element={<CustomerHome auth={state} updateToken={handleToken} />}
         />
         <Route
@@ -74,12 +68,50 @@ function App() {
           element={<CustomerRegister updateToken={handleToken} />}
         />
         <Route
+          path="/customer/edit"
+          element={
+            <ProtectedRoute
+              auth={state}
+              toNavigate="/customer/login"
+              type="customer"
+            >
+              <CustomerEditDetails auth={state} updateToken={handleToken} />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/tiffin-vendor"
+          element={
+            <ProtectedRoute
+              auth={state}
+              toNavigate="/tiffin-vendor/login"
+              type="tiffin-vendor"
+            >
+              <TiffinVendorHome auth={state} />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
           path="/tiffin-vendor/login"
           element={<TiffinVendorLogin updateToken={handleToken} />}
         />
         <Route
           path="/tiffin-vendor/register"
           element={<TiffinVendorRegister updateToken={handleToken} />}
+        />
+        <Route
+          path="/tiffin-vendor/edit"
+          element={
+            <ProtectedRoute
+              auth={state}
+              toNavigate="/tiffin-vendor/login"
+              type="tiffin-vendor"
+            >
+              <TiffinVendorEditDetails auth={state} updateToken={handleToken} />
+            </ProtectedRoute>
+          }
         />
 
         <Route path="*" element={<NotFound />} />

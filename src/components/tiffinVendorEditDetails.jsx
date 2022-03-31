@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import {
+  editTiffinVendor as edit,
+  getTiffinVendor,
+} from "./services/vendorService";
 import FormInput from "./common/formInput";
-import { registerTiffinVendor as register } from "./services/vendorService";
-import { clearToken } from "./services/clearJwt";
 
 import "../styles/auth.css";
 
-function TiffinVendorRegister(props) {
+function TiffinVendorEditDetails(props) {
   const [tiffinVendor, setTiffinVendor] = useState({
     "business name": "",
     email: "",
@@ -26,10 +28,20 @@ function TiffinVendorRegister(props) {
     "veg option?": false,
   });
   let navigate = useNavigate();
+  const { token, isLoggedIn, isCustomer } = props.auth;
+  const { updateToken } = props;
+
   useEffect(() => {
-    clearToken(props.updateToken);
+    async function fetchTiffinVendor() {
+      const vendor = await getTiffinVendor(token);
+      if (vendor === null) return;
+      if (vendor) {
+        setTiffinVendor(vendor);
+      } else navigate("/tiffin-vendor/login");
+    }
+    fetchTiffinVendor();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [token]);
 
   const handleChange = ({ currentTarget: input }) => {
     const vendor = { ...tiffinVendor };
@@ -40,11 +52,15 @@ function TiffinVendorRegister(props) {
     setTiffinVendor(vendor);
   };
 
-  const handleRegister = async (e) => {
+  const handleEdit = async (e) => {
     e.preventDefault();
-    const result = await register(tiffinVendor, props.updateToken);
-    if (result === true) navigate("/tiffin-vendor");
-    else if (result) toast.error(result.data);
+    if (isLoggedIn && !isCustomer) {
+      const result = await edit(tiffinVendor, token, updateToken);
+      if (result === true) {
+        toast.success("updated successfully");
+        navigate("/tiffin-vendor");
+      } else if (result) toast.error(result.data);
+    } else toast.error("please login again");
   };
 
   return (
@@ -55,7 +71,10 @@ function TiffinVendorRegister(props) {
       >
         <div className="card-body">
           <form>
-            <h5 className="card-title mb-5">Tiffin Vendor Register</h5>
+            <h5 className="card-title mb-5">Edit Details</h5>
+            <p style={{ textAlign: "left", color: "grey" }}>
+              leave fields as they are which you don't want to edit
+            </p>
             <FormInput
               value={tiffinVendor["business name"]}
               type="text"
@@ -149,21 +168,9 @@ function TiffinVendorRegister(props) {
               />
             </div>
 
-            <button className="btn btn-primary" onClick={handleRegister}>
-              Register
+            <button className="btn btn-primary" onClick={handleEdit}>
+              Save
             </button>
-            <h5 className="message">
-              Not a Customer?{" "}
-              <Link className="pointer" to="/tiffin-vendor/login">
-                Tiffin Vendor
-              </Link>
-            </h5>
-            <h5 className="message">
-              Already Registered?{" "}
-              <Link className="pointer" to="/tiffin-vendor/login">
-                Login
-              </Link>
-            </h5>
           </form>
         </div>
       </div>
@@ -171,4 +178,4 @@ function TiffinVendorRegister(props) {
   );
 }
 
-export default TiffinVendorRegister;
+export default TiffinVendorEditDetails;

@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { clearToken } from "./services/clearJwt";
-import { registerCustomer as register } from "./services/customerService";
+import { editCustomer as edit, getCustomer } from "./services/customerService";
 import FormInput from "./common/formInput";
 
 import "../styles/auth.css";
 
-function CustomerRegister(props) {
+function CustomerEditDetails(props) {
   const [customer, setCustomer] = useState({
     name: "",
     email: "",
@@ -19,29 +18,44 @@ function CustomerRegister(props) {
     city: "",
     pincode: "",
   });
+  const { token, isLoggedIn, isCustomer } = props.auth;
+  const { updateToken } = props;
   let navigate = useNavigate();
-  useEffect(()=>{
-    clearToken(props.updateToken)
+  useEffect(() => {
+    async function fetchCustomer() {
+      const cust = await getCustomer(token);
+      if (cust === null) return;
+      if (cust) {
+        setCustomer(cust);
+      } else navigate("/customer/login");
+    }
+    fetchCustomer();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
+  }, [token]);
   const handleChange = ({ currentTarget: input }) => {
     const cust = { ...customer };
     cust[input.name] = input.value;
     setCustomer(cust);
   };
 
-  const handleRegister = async (e) => {
+  const handleEdit = async (e) => {
     e.preventDefault();
-    const result = await register(customer, props.updateToken);
-    if (result === true) navigate("/customer");
-    else if (result) toast.error(result.data);
+    if (isLoggedIn && isCustomer) {
+      const result = await edit(customer, token, updateToken);
+      if (result === true) {
+        toast.success("updated successfully");
+        navigate("/customer");
+      } else if (result) toast.error(result.data);
+    } else toast.error("please login again");
   };
   return (
-    <div className="card shadow-lg">
+    <div className="card shadow" style={{ width: "600px" }}>
       <div className="card-body">
         <form>
-          <h5 className="card-title mb-5">Customer Register</h5>
+          <h5 className="card-title mb-3">Edit Details</h5>
+          <p style={{ textAlign: "left", color: "grey" }}>
+            leave fields as they are which you don't want to edit
+          </p>
           <FormInput
             value={customer.name}
             type="text"
@@ -79,25 +93,13 @@ function CustomerRegister(props) {
             onChange={handleChange}
           />
 
-          <button className="btn btn-primary" onClick={handleRegister}>
-            Register
+          <button className="btn btn-primary" onClick={handleEdit}>
+            Save
           </button>
-          <h5 className="message">
-            Not a Customer?{" "}
-            <Link className="pointer" to="/tiffin-vendor/login">
-              Tiffin Vendor
-            </Link>
-          </h5>
-          <h5 className="message">
-            Already Registered?{" "}
-            <Link className="pointer" to="/customer/login">
-              Login
-            </Link>
-          </h5>
         </form>
       </div>
     </div>
   );
 }
 
-export default CustomerRegister;
+export default CustomerEditDetails;

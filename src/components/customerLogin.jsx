@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import FormInput from "./common/formInput";
 
+import { clearToken } from "./services/clearJwt";
 import { loginCustomer as login } from "./services/customerService";
 
 import "../styles/auth.css";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 function CustomerLogin(props) {
   const [account, setAccount] = useState({ email: "", password: "" });
   let navigate = useNavigate();
+  useEffect(()=>{
+    clearToken(props.updateToken)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  
 
   const handleChange = ({ currentTarget: input }) => {
     const acc = { ...account };
@@ -26,7 +32,6 @@ function CustomerLogin(props) {
 
   return (
     <React.Fragment>
-      <ToastContainer />
       <div className="card shadow-lg">
         <div className="card-body">
           <form>

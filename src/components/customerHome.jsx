@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
-import config from "../config.json";
+import { clearToken } from "./services/clearJwt";
 import { getName } from "./services/customerService";
 import { getTiffinVendors } from "./services/vendorService";
 
@@ -18,8 +18,7 @@ function CustomerHome(props) {
   useEffect(() => {
     if (!isLoggedIn) return;
     if (isLoggedIn && !isCustomer) {
-      localStorage.removeItem(config.localStorageKey);
-      updateToken(null, true);
+      clearToken(updateToken)
       return;
     }
     const name = getName(token);
@@ -39,7 +38,6 @@ function CustomerHome(props) {
 
   return (
     <React.Fragment>
-      <ToastContainer />
       <div id="background" className={!searched ? "bg-height" : ""}>
         <h4 className="greeting"> {`Hi ${name}`}</h4>
         <div className="input-group mb-3 ">
@@ -59,6 +57,7 @@ function CustomerHome(props) {
           </button>
         </div>
       </div>
+      <div className="row"></div>
     </React.Fragment>
   );
 }

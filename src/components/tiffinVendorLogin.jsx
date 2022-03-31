@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 import { loginTiffinVendor as login } from "./services/vendorService";
 import FormInput from "./common/formInput";
 
+
+import { clearToken } from "./services/clearJwt";
 import "../styles/auth.css";
 
 function TiffinVendorLogin(props) {
   const [account, setAccount] = useState({ email: "", password: "" });
   let navigate = useNavigate();
-
+  useEffect(()=>{
+    clearToken(props.updateToken)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
   const handleChange = ({ currentTarget: input }) => {
     const acc = { ...account };
     acc[input.name] = input.value;
@@ -26,7 +31,6 @@ function TiffinVendorLogin(props) {
 
   return (
     <React.Fragment>
-      <ToastContainer />
       <div className="card shadow-lg">
         <div className="card-body">
           <form>
