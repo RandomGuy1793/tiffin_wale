@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import ProtectedRoute from "./components/protectedRoute";
@@ -11,11 +11,13 @@ import TiffinVendorHome from "./components/tiffinVendorHome";
 import TiffinVendorLogin from "./components/tiffinVendorLogin";
 import TiffinVendorRegister from "./components/tiffinVendorRegister";
 import TiffinVendorEditDetails from "./components/tiffinVendorEditDetails";
+import TiffinVendorDetails from "./components/tiffinVendorDetails";
 import NavBar from "./components/navBar";
 import NotFound from "./components/notFound";
 
 import config from "./config.json";
 import "./App.css";
+import CustomerSubscriptions from "./components/customerSubscriptions";
 
 function App() {
   const defaultState = {
@@ -51,10 +53,7 @@ function App() {
       <NavBar auth={state} updateToken={handleToken} />
       <ToastContainer />
       <Routes>
-        <Route
-          path="/"
-          element={<CustomerHome auth={state} updateToken={handleToken} />}
-        />
+        <Route path="/" element={<Navigate to="/customer" replace />} />
         <Route
           path="/customer"
           element={<CustomerHome auth={state} updateToken={handleToken} />}
@@ -78,6 +77,24 @@ function App() {
               <CustomerEditDetails auth={state} updateToken={handleToken} />
             </ProtectedRoute>
           }
+        />
+
+        <Route
+          path="/customer/subscriptions"
+          element={
+            <ProtectedRoute
+              auth={state}
+              toNavigate={"/customer/login"}
+              type="customer"
+            >
+              <CustomerSubscriptions auth={state} />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path={`/customer/vendor/:id`}
+          element={<TiffinVendorDetails auth={state} />}
         />
 
         <Route

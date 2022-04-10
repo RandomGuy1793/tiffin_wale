@@ -95,3 +95,26 @@ export async function editCustomer(customer, token, updateToken) {
     return ex.response;
   }
 }
+
+export async function addReview(review, token, id){
+  const reviewToSend={
+    vendorId: id,
+    rating: review["stars out of 5"],
+    review:{
+      title: review.title,
+      text: review.details
+    }
+  }
+  try{
+    await axios.post(`${config.apiUrl}/tiffin-vendor/review`, reviewToSend, {
+      headers:{
+        'x-auth-token': token
+      }
+    })
+    return true
+  }
+  catch(ex){
+    if(ex===null) return null
+    return ex.response
+  }
+}

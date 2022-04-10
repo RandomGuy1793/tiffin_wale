@@ -42,3 +42,21 @@ code {
   padding: 1.3rem 3rem;
   color: rgb(245, 244, 244);
 }
+
+.veg-icon{
+  content: url('../public/images/veg_icon.png');
+  width: 30px;
+}
+
+.non-veg-icon{
+  content: url('../public/images/non_veg_icon.png');
+  width: 30px;
+}
+
+.hover-card{
+  transition: 300ms;
+}
+
+.hover-card:hover{
+  transform: scale(1.07);
+}

@@ -49,7 +49,7 @@ function CustomerEditDetails(props) {
     } else toast.error("please login again");
   };
   return (
-    <div className="card shadow" style={{ width: "600px" }}>
+    <div className="card form-card shadow" style={{ width: "600px" }}>
       <div className="card-body">
         <form>
           <h5 className="card-title mb-3">Edit Details</h5>

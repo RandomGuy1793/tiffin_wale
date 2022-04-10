@@ -53,7 +53,7 @@ function NavBar(props) {
           )}
           {isLoggedIn && isCustomer ? (
             <ul className="navbar-nav ml-auto justify-content">
-              <button className="nav-link btn">Subscriptions</button>
+              <button className="nav-link btn" onClick={() => navigate("/customer/subscriptions")}>Subscriptions</button>
               <button
                 className="nav-link btn"
                 onClick={() => navigate("/customer/edit")}

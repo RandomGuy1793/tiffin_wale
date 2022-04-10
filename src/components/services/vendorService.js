@@ -97,6 +97,16 @@ export async function getTiffinVendor(token) {
   }
 }
 
+export async function getTiffinVendorById(id) {
+  try {
+    const res = await axios.get(`${config.apiUrl}/tiffin-vendor/${id}`);
+    return res.data;
+  } catch (ex) {
+    if (ex === null) return null;
+    return false;
+  }
+}
+
 export async function loginTiffinVendor(tiffinVendor, updateToken) {
   try {
     const res = await axios.post(
