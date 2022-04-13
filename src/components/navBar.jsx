@@ -19,7 +19,7 @@ function NavBar(props) {
       <div className="container-fluid ">
         <Link
           to={isLoggedIn && !isCustomer ? "/tiffin-vendor" : "/customer"}
-          className="navbar-brand mx-4 fw-bold"
+          className="navbar-brand fs-4 mx-4 fw-bold"
         >
           Tiffin Wale
         </Link>
@@ -69,7 +69,7 @@ function NavBar(props) {
           )}
           {isLoggedIn && !isCustomer ? (
             <ul className="navbar-nav ml-auto justify-content">
-              <button className="nav-link btn">Customer subscriptions</button>
+              <button className="nav-link btn">Subscriptions</button>
               <button
                 className="nav-link btn"
                 onClick={() => navigate("/tiffin-vendor/edit")}

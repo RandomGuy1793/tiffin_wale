@@ -3,6 +3,11 @@
     width: 45%
 }
 
+.subscribe .business-name{
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+}
+
 @media (max-width: 1050px) {
     .subscribe .card{
       width: 80%;

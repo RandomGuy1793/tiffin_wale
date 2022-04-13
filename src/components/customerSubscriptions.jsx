@@ -23,7 +23,7 @@ function CustomerSubscriptions(props) {
       }
     }
     getSubscriptions();
-  }, []);
+  }, [isLoggedIn, isCustomer, token]);
 
   const handleCancel = async (id) => {
     if (isLoggedIn && isCustomer) {
@@ -85,7 +85,7 @@ function CustomerSubscriptions(props) {
             <div key={_id} className="card shadow-sm">
               <div className="card-body">
                 <h5
-                  className="pointer"
+                  className="pointer business-name"
                   onClick={() => navigate(`/customer/vendor/${vendorId}`)}
                 >
                   {vendorName}

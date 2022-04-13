@@ -153,9 +153,9 @@ function TiffinVendorRegister(props) {
               Register
             </button>
             <h5 className="message">
-              Not a Customer?{" "}
-              <Link className="pointer" to="/tiffin-vendor/login">
-                Tiffin Vendor
+              Not a Tiffin Vendor?{" "}
+              <Link className="pointer" to="/customer/login">
+                Customer
               </Link>
             </h5>
             <h5 className="message">

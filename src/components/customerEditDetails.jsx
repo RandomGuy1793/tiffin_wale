@@ -31,7 +31,7 @@ function CustomerEditDetails(props) {
     }
     fetchCustomer();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
+  }, []);
   const handleChange = ({ currentTarget: input }) => {
     const cust = { ...customer };
     cust[input.name] = input.value;

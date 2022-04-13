@@ -41,7 +41,7 @@ function TiffinVendorEditDetails(props) {
     }
     fetchTiffinVendor();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
+  }, []);
 
   const handleChange = ({ currentTarget: input }) => {
     const vendor = { ...tiffinVendor };
@@ -58,9 +58,9 @@ function TiffinVendorEditDetails(props) {
       const result = await edit(tiffinVendor, token, updateToken);
       if (result === true) {
         toast.success("updated successfully");
-        navigate("/tiffin-vendor");
-      } else if (result) toast.error(result.data);
-    } else toast.error("please login again");
+        return navigate("/tiffin-vendor");
+      } else if (result) return toast.error(result.data);
+    } else return toast.error("please login again");
   };
 
   return (

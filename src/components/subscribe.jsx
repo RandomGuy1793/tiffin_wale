@@ -44,7 +44,7 @@ function Subscribe(props) {
     <div className="subscribe">
       <div className="card mx-auto mt-5">
         <div className="card-body px-5 py-4">
-          <h3>Subscribe to {businessName}</h3>
+          <h3 className="business-name">Subscribe to {businessName}</h3>
           <p className="lead">Breakfast: {routine.breakfast}</p>
           <p className="lead">
             Lunch:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{routine.lunch}

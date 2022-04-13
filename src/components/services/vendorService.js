@@ -27,7 +27,6 @@ function makeTiffinVendorToSend(tiffinVendor) {
     hasVeg: tiffinVendor["veg option?"],
   };
   if (tiffinVendorToSend.password === "") delete tiffinVendorToSend.password;
-  console.log(tiffinVendorToSend);
   return tiffinVendorToSend;
 }
 

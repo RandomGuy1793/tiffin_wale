@@ -67,7 +67,6 @@ function TiffinVendorDetails(props) {
     monthRate,
     routine,
     hasVeg,
-    _id
   } = vendor;
 
   if (Object.keys(vendor).length !== 0) {
@@ -78,7 +77,7 @@ function TiffinVendorDetails(props) {
             <div className="card-body">
               <div className="row">
                 <div className="col-5">
-                  <h1>{businessName}</h1>
+                  <h1 className="business-name">{businessName}</h1>
                 </div>
                 <div className="col-7" style={{ textAlign: "right" }}>
                   <p className="mb-1">
