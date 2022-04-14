@@ -1,23 +1,24 @@
-import React, { useEffect, useState } from "react";
-
-import {
-  getCustomerSubscriptions,
-  cancelSubscription,
-} from "./services/subscriptionService";
-
-import "../styles/subscriptions.css";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import SubscriptionCard from "./common/subscriptionCard";
 
-function CustomerSubscriptions(props) {
+import "../styles/subscriptions.css";
+
+import {
+  getTiffinVendorSubscriptions,
+  cancelSubscription,
+} from "./services/subscriptionService";
+import { approveSubscription } from "./services/vendorService";
+
+function TiffinVendorSubscriptions(props) {
   const { token, isCustomer, isLoggedIn } = props.auth;
   const [subscriptions, setSubscriptions] = useState([]);
   const [filter, setFilter] = useState("all");
 
   useEffect(() => {
     async function getSubscriptions() {
-      if (isLoggedIn && isCustomer) {
-        const fetchedSubscriptions = await getCustomerSubscriptions(token);
+      if (isLoggedIn && !isCustomer) {
+        const fetchedSubscriptions = await getTiffinVendorSubscriptions(token);
         setSubscriptions(fetchedSubscriptions);
       }
     }
@@ -25,14 +26,30 @@ function CustomerSubscriptions(props) {
   }, [isLoggedIn, isCustomer, token]);
 
   const handleCancel = async (id) => {
-    if (isLoggedIn && isCustomer) {
-      const err = await cancelSubscription(id, token, true);
+    if (isLoggedIn && !isCustomer) {
+      const err = await cancelSubscription(id, token, false);
       if (err === null) return;
       if (err === false) return toast.error(`couldn't delete subscription`);
       toast.success("cancelled successfully");
       setSubscriptions(subscriptions.filter((sub) => sub._id !== id));
     }
   };
+
+  const handleApprove = async (id) => {
+    if (isLoggedIn && !isCustomer) {
+      const subscription = await approveSubscription(id, token);
+      if (subscription === null) return;
+      if (subscription === false)
+        return toast.error(`couldn't accept subscription`);
+      toast.success("subscription approved");
+      setSubscriptions(
+        subscriptions.map((sub) => {
+          return sub._id === subscription._id ? subscription : sub;
+        })
+      );
+    }
+  };
+
   return (
     <div className="subscriptions">
       <div className="filter my-5">
@@ -73,8 +90,9 @@ function CustomerSubscriptions(props) {
             <SubscriptionCard
               key={subscription._id}
               subscription={subscription}
-              isCustomer={true}
+              isCustomer={false}
               onCancel={handleCancel}
+              onApprove={handleApprove}
             />
           );
         })}
@@ -82,4 +100,4 @@ function CustomerSubscriptions(props) {
   );
 }
 
-export default CustomerSubscriptions;
+export default TiffinVendorSubscriptions;

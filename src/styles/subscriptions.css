@@ -1,23 +1,23 @@
 
-.customer-subscriptions .card{
+.subscriptions .card{
     text-align: left;
     width: 40%;
     margin: 1rem auto;
 }
 
-.customer-subscriptions .business-name{
+.subscriptions .name{
     font-family: 'Rubik', sans-serif;
     font-weight: 500;
 }
 
 @media (max-width: 980px) {
-    .customer-subscriptions .card{
+    .subscriptions .card{
         width: 80%;
     }
   }
   
   @media (max-width: 650px) {
-    .customer-subscriptions .card{
+    .subscriptions .card{
         width: 100%;
     }
   }

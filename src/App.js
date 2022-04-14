@@ -18,6 +18,7 @@ import NotFound from "./components/notFound";
 import config from "./config.json";
 import "./App.css";
 import CustomerSubscriptions from "./components/customerSubscriptions";
+import TiffinVendorSubscriptions from "./components/tiffinVendorSubscriptions";
 
 function App() {
   const defaultState = {
@@ -127,6 +128,18 @@ function App() {
               type="tiffin-vendor"
             >
               <TiffinVendorEditDetails auth={state} updateToken={handleToken} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tiffin-vendor/subscriptions"
+          element={
+            <ProtectedRoute
+              auth={state}
+              toNavigate={"/tiffin-vendor/login"}
+              type="tiffin-vendor"
+            >
+              <TiffinVendorSubscriptions auth={state} />
             </ProtectedRoute>
           }
         />

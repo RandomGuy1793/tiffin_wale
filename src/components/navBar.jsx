@@ -69,7 +69,7 @@ function NavBar(props) {
           )}
           {isLoggedIn && !isCustomer ? (
             <ul className="navbar-nav ml-auto justify-content">
-              <button className="nav-link btn">Subscriptions</button>
+              <button className="nav-link btn" onClick={()=>navigate("/tiffin-vendor/subscriptions")}>Subscriptions</button>
               <button
                 className="nav-link btn"
                 onClick={() => navigate("/tiffin-vendor/edit")}

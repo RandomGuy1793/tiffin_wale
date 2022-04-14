@@ -18,7 +18,9 @@ function Subscribe(props) {
 
   const handleMealChange = ({ target }) => {
     const currMeal = { ...meals };
-    currMeal[target.name] = !currMeal[target.name];
+    let key = target.name;
+    if (typeof key === "undefined") key = target.innerText;
+    currMeal[key] = !currMeal[key];
     setMeals(currMeal);
   };
 
@@ -80,7 +82,13 @@ function Subscribe(props) {
                   checked={value}
                 />
                 <label className="form-check-label ms-2" htmlFor={meal}>
-                  <p className="fst-italic">{meal}</p>
+                  <p
+                    className="fst-italic"
+                    name={meal}
+                    onClick={handleMealChange}
+                  >
+                    {meal}
+                  </p>
                 </label>
               </div>
             );

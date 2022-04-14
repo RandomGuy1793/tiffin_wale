@@ -1,20 +1,39 @@
 import { getMealCount } from "./subscriptionService";
 
 export function createData(subscriptions) {
+  const monthsOrder = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
   const monthRevenue = {};
   subscriptions.forEach((sub) => {
     if (sub.isAccepted) {
       const startDate = new Date(sub.startDate);
       if (isWithin6months(startDate)) {
         const subMonth = startDate.toLocaleString("default", { month: "long" });
-        if (typeof monthRevenue[subMonth] === "undefined") monthRevenue[subMonth] = 0;
+        if (typeof monthRevenue[subMonth] === "undefined")
+          monthRevenue[subMonth] = 0;
         monthRevenue[subMonth] += getSubAmount(sub);
       }
     }
   });
-  return Object.keys(monthRevenue).map((month)=>{
-      return {label: month, y: monthRevenue[month]}
-  })
+  let monthRevenueArray = Object.keys(monthRevenue);
+  monthRevenueArray.sort(
+    (a, b) => monthsOrder.indexOf(a) - monthsOrder.indexOf(b)
+  );
+  return monthRevenueArray.map((month) => {
+    return { label: month, y: monthRevenue[month] };
+  });
 }
 
 function isWithin6months(startDate) {

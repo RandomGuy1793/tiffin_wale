@@ -171,3 +171,18 @@ export async function editTiffinVendor(tiffinVendor, token, updateToken) {
     return ex.response;
   }
 }
+
+export async function approveSubscription(id, token){
+  try{
+    const res=await axios.put(`${config.apiUrl}/tiffin-vendor/accept-subscription/${id}`,{}, {
+      headers: {
+        'x-auth-token': token
+      }
+    })
+    return res.data
+  }
+  catch(ex){
+    if(ex===null) return null
+    return false
+  }
+}
