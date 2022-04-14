@@ -21,12 +21,12 @@ function SubscriptionCard(props) {
     <div className="card shadow-sm">
       <div className="card-body">
         <h5
-          className="pointer name"
+          className={isCustomer ? "pointer name": "name"}
           onClick={
             isCustomer ? () => navigate(`/customer/vendor/${vendorId}`) : null
           }
         >
-          {isCustomer ? customerName : vendorName}
+          {isCustomer ? vendorName : customerName}
         </h5>
         <h6 className="d-inline">Meals Opted : </h6>
         <p className="d-inline lead">{opted.breakfast && "breakfast"} </p>
