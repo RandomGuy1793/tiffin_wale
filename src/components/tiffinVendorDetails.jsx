@@ -143,7 +143,7 @@ function TiffinVendorDetails(props) {
                       with minimum subscription of
                       <strong className="h5">
                         {" "}
-                        {monthRate.minMonthForNewRate*30}
+                        {monthRate.minMonthForNewRate * 30}
                       </strong>{" "}
                       days.
                     </small>
@@ -236,10 +236,14 @@ function TiffinVendorDetails(props) {
                           <h5 className="d-inline me-3">
                             {customerReview.rating}
                           </h5>
-                          <h6 className="d-inline">
-                            {customerReview.review.title}
-                          </h6>
-                          <p className="ms-4">{customerReview.review.text}</p>
+                          {customerReview.review && (
+                            <h6 className="d-inline">
+                              {customerReview.review.title}
+                            </h6>
+                          )}
+                          {customerReview.review && (
+                            <p className="ms-4">{customerReview.review.text}</p>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -257,7 +261,7 @@ function TiffinVendorDetails(props) {
         </div>
       );
     } else {
-      return <Subscribe vendor={vendor} auth={props.auth}/>;
+      return <Subscribe vendor={vendor} auth={props.auth} />;
     }
   }
   return null;

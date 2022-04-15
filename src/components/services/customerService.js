@@ -105,6 +105,7 @@ export async function addReview(review, token, id){
       text: review.details
     }
   }
+  if(reviewToSend.review.title==="" && reviewToSend.review.text==="") delete reviewToSend.review
   try{
     await axios.post(`${config.apiUrl}/tiffin-vendor/review`, reviewToSend, {
       headers:{
