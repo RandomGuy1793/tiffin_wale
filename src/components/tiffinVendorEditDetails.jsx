@@ -73,7 +73,7 @@ function TiffinVendorEditDetails(props) {
           <form>
             <h5 className="card-title mb-5">Edit Details</h5>
             <p style={{ textAlign: "left", color: "grey" }}>
-              leave fields as they are which you don't want to edit
+              Don't fill up password if you don't want to change it
             </p>
             <FormInput
               value={tiffinVendor["business name"]}

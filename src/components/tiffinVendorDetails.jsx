@@ -175,20 +175,35 @@ function TiffinVendorDetails(props) {
               </button>
               {reviewBox && (
                 <div className="my-3 w-75">
-                  <div className="w-25">
-                    <FormInput
-                      name="stars out of 5"
-                      type="number"
-                      value={review.rating}
-                      onChange={onReviewChange}
-                    />
+                  <div className="mb-2">
+                    <label htmlFor="">
+                      <span style={{ color: "red" }}>*</span>Stars:{" "}
+                    </label>
+                    <select
+                      className="form-select w-25"
+                      onChange={({ target }) => {
+                        const currReview = { ...review };
+                        currReview["stars out of 5"] = parseInt(target.value);
+                        setReview(currReview);
+                      }}
+                      value={review["stars out of 5"]}
+                    >
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
                   </div>
+
+                  <label htmlFor="">Title: </label>
                   <FormInput
                     name="title"
                     type="text"
                     value={review.title}
                     onChange={onReviewChange}
                   />
+                  <label htmlFor="">Details: </label>
                   <FormInput
                     name="details"
                     type="text"

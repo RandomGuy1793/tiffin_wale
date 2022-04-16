@@ -10,4 +10,10 @@
     font-family: 'Rubik', sans-serif;
 }
 
+@media (max-width: 500px) {
+    .tiffin-vendor-card .card{
+        width: 360px;
+    }
+  }
+
 
