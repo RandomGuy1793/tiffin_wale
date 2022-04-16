@@ -9,6 +9,7 @@ import "../styles/tiffinVendorHome.css";
 function TiffinVendorHome(props) {
   const [name, setName] = useState("");
   const [subscriptions, setSubscriptions] = useState([]);
+  const [subscriptionCount, setSubscriptionCount] = useState(0);
   const [dataPoints, setDataPoints] = useState([]);
   const { token, isLoggedIn, isCustomer } = props.auth;
 
@@ -28,7 +29,8 @@ function TiffinVendorHome(props) {
   }, [token, isLoggedIn, isCustomer]);
 
   useEffect(() => {
-    const data = createGraphData(subscriptions);
+    const [data, subsCount] = createGraphData(subscriptions);
+    setSubscriptionCount(subsCount);
     setDataPoints(data);
   }, [subscriptions]);
   return (
@@ -40,6 +42,8 @@ function TiffinVendorHome(props) {
           dataPoints={dataPoints}
           axisY={{ title: "Revenue(in Rupees)" }}
         />
+
+        <h2 className="mt-5">Total subscriptions in 6 months:- {subscriptionCount}</h2>
       </div>
     </div>
   );

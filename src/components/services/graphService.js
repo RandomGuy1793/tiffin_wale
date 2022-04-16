@@ -16,10 +16,12 @@ export function createData(subscriptions) {
     "December",
   ];
   const monthRevenue = {};
+  let subCount = 0;
   subscriptions.forEach((sub) => {
     if (sub.isAccepted) {
       const startDate = new Date(sub.startDate);
       if (isWithin6months(startDate)) {
+        subCount++;
         const subMonth = startDate.toLocaleString("default", { month: "long" });
         if (typeof monthRevenue[subMonth] === "undefined")
           monthRevenue[subMonth] = 0;
@@ -31,9 +33,12 @@ export function createData(subscriptions) {
   monthRevenueArray.sort(
     (a, b) => monthsOrder.indexOf(a) - monthsOrder.indexOf(b)
   );
-  return monthRevenueArray.map((month) => {
-    return { label: month, y: monthRevenue[month] };
-  });
+  return [
+    monthRevenueArray.map((month) => {
+      return { label: month, y: monthRevenue[month] };
+    }),
+    subCount,
+  ];
 }
 
 function isWithin6months(startDate) {

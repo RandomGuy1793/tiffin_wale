@@ -49,6 +49,36 @@ function TiffinVendorSubscriptions(props) {
       );
     }
   };
+  const SubscriptionsToShow = subscriptions
+    .filter((subscription) => {
+      if (filter === "all") return true;
+      if (
+        filter === "active" &&
+        subscription.isAccepted === true &&
+        new Date(subscription.endDate) >= new Date()
+      )
+        return true;
+      if (filter === "pending" && subscription.isAccepted === false)
+        return true;
+      if (
+        filter === "expired" &&
+        subscription.isAccepted &&
+        new Date(subscription.endDate) < new Date()
+      )
+        return true;
+      return false;
+    })
+    .map((subscription) => {
+      return (
+        <SubscriptionCard
+          key={subscription._id}
+          subscription={subscription}
+          isCustomer={false}
+          onCancel={handleCancel}
+          onApprove={handleApprove}
+        />
+      );
+    });
 
   return (
     <div className="subscriptions">
@@ -66,36 +96,11 @@ function TiffinVendorSubscriptions(props) {
           <option value="expired">Expired subscriptions</option>
         </select>
       </div>
-      {subscriptions
-        .filter((subscription) => {
-          if (filter === "all") return true;
-          if (
-            filter === "active" &&
-            subscription.isAccepted === true &&
-            new Date(subscription.endDate) >= new Date()
-          )
-            return true;
-          if (filter === "pending" && subscription.isAccepted === false)
-            return true;
-          if (
-            filter === "expired" &&
-            subscription.isAccepted &&
-            new Date(subscription.endDate) < new Date()
-          )
-            return true;
-          return false;
-        })
-        .map((subscription) => {
-          return (
-            <SubscriptionCard
-              key={subscription._id}
-              subscription={subscription}
-              isCustomer={false}
-              onCancel={handleCancel}
-              onApprove={handleApprove}
-            />
-          );
-        })}
+      {SubscriptionsToShow.length ? (
+        SubscriptionsToShow
+      ) : (
+        <h1>No subscriptions</h1>
+      )}
     </div>
   );
 }

@@ -33,6 +33,35 @@ function CustomerSubscriptions(props) {
       setSubscriptions(subscriptions.filter((sub) => sub._id !== id));
     }
   };
+  const subscriptionsToShow = subscriptions
+    .filter((subscription) => {
+      if (filter === "all") return true;
+      if (
+        filter === "active" &&
+        subscription.isAccepted === true &&
+        new Date(subscription.endDate) >= new Date()
+      )
+        return true;
+      if (filter === "pending" && subscription.isAccepted === false)
+        return true;
+      if (
+        filter === "expired" &&
+        subscription.isAccepted &&
+        new Date(subscription.endDate) < new Date()
+      )
+        return true;
+      return false;
+    })
+    .map((subscription) => {
+      return (
+        <SubscriptionCard
+          key={subscription._id}
+          subscription={subscription}
+          isCustomer={true}
+          onCancel={handleCancel}
+        />
+      );
+    });
   return (
     <div className="subscriptions">
       <div className="filter my-5">
@@ -49,35 +78,11 @@ function CustomerSubscriptions(props) {
           <option value="expired">Expired subscriptions</option>
         </select>
       </div>
-      {subscriptions
-        .filter((subscription) => {
-          if (filter === "all") return true;
-          if (
-            filter === "active" &&
-            subscription.isAccepted === true &&
-            new Date(subscription.endDate) >= new Date()
-          )
-            return true;
-          if (filter === "pending" && subscription.isAccepted === false)
-            return true;
-          if (
-            filter === "expired" &&
-            subscription.isAccepted &&
-            new Date(subscription.endDate) < new Date()
-          )
-            return true;
-          return false;
-        })
-        .map((subscription) => {
-          return (
-            <SubscriptionCard
-              key={subscription._id}
-              subscription={subscription}
-              isCustomer={true}
-              onCancel={handleCancel}
-            />
-          );
-        })}
+      {subscriptionsToShow.length ? (
+        subscriptionsToShow
+      ) : (
+        <h1>No subscriptions</h1>
+      )}
     </div>
   );
 }
