@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import _ from "lodash";
 
 import "../styles/tiffinVendorCard.css";
 
@@ -21,7 +22,8 @@ function TiffinVendorCard(props) {
               Rating:{" "}
             </p>
             <h6 className="d-inline">
-              {rating.numberOfRatings > 0 && `${rating.currentRating}/5`}
+              {rating.numberOfRatings > 0 &&
+                `${_.round(rating.currentRating, 1)}/5`}
             </h6>
             <p className="d-inline mx-2">
               {rating.numberOfRatings > 0 && `(${rating.numberOfRatings})`}

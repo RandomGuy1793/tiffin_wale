@@ -7,6 +7,7 @@ import FormInput from "./common/formInput";
 import Subscribe from "./subscribe";
 
 import "../styles/tiffinVendorDetails.css";
+import _ from "lodash";
 const initialReviewState = {
   "stars out of 5": 5,
   title: "",
@@ -96,7 +97,8 @@ function TiffinVendorDetails(props) {
               <h6
                 className={rating.numberOfRatings > 0 ? "d-inline" : "d-none"}
               >
-                {rating.numberOfRatings > 0 && `${rating.currentRating}/5`}
+                {rating.numberOfRatings > 0 &&
+                  `${_.round(rating.currentRating, 1)}/5`}
               </h6>
               <p
                 className={
@@ -226,7 +228,8 @@ function TiffinVendorDetails(props) {
                       rating.numberOfRatings > 0 ? "d-inline" : "d-none"
                     }
                   >
-                    {rating.numberOfRatings > 0 && `${rating.currentRating}/5`}
+                    {rating.numberOfRatings > 0 &&
+                      `${_.round(rating.currentRating, 1)}/5`}
                   </h5>
                   <p
                     className={
@@ -249,15 +252,14 @@ function TiffinVendorDetails(props) {
                       <div className="card w-100 m-2">
                         <div className="card-body px-5 py-2">
                           <h5 className="d-inline me-3">
-                            {customerReview.rating}
+                            {customerReview.rating}{" "}
+                            <i className="fa fa-star" aria-hidden="true"></i>
                           </h5>
                           {customerReview.review && (
-                            <h6 className="d-inline">
-                              {customerReview.review.title}
-                            </h6>
+                            <h6>{customerReview.review.title}</h6>
                           )}
                           {customerReview.review && (
-                            <p className="ms-4">{customerReview.review.text}</p>
+                            <p>{customerReview.review.text}</p>
                           )}
                         </div>
                       </div>
