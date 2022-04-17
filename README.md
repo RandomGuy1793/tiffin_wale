@@ -1,3 +1,36 @@
+# api-tiffin_wale
+
+<a href="https://github.com/RandomGuy1793/api-tiffin_wale">Back End repo link</a>
+
+A website for tiffin walas and customers where they can buy subscriptions from tiffin walas.
+
+FrontEnd-> HTML, CSS, Bootstrap, JavaScript, ReactJs\
+BackEnd-> NodeJs, Express, Mongoose, MongoDb
+
+Sample screenshots-
+
+<p>Desktop-</p>
+<p>Customer-</p>
+<img src="./screenshots/pic_1.png" width="80%" />
+  <br />
+  <br />
+    <img src="./screenshots/pic_2.png" width="80%" />
+  <br />
+  <br />
+    <img src="./screenshots/pic_3.png" width="80%" />
+  <br />
+  <br />
+  <p>Tffin Vendor-</p>
+    <img src="./screenshots/pic_4.png" width="80%" />
+  <br />
+  <br />
+
+<p>Mobile-</p>
+<p float="left">
+<img src="./screenshots/pic_1_mobile.png" width="40%">
+<img src="./screenshots/pic_2_mobile.png" width="40%">
+</p>
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
