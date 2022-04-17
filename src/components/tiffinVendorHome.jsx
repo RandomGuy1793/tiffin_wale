@@ -43,7 +43,9 @@ function TiffinVendorHome(props) {
           axisY={{ title: "Revenue(in Rupees)" }}
         />
 
-        <h2 className="mt-5">Total subscriptions in 6 months:- {subscriptionCount}</h2>
+        <h2 className="mt-5">
+          Total subscriptions in 6 months:- {subscriptionCount}
+        </h2>
       </div>
     </div>
   );

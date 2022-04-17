@@ -59,17 +59,18 @@ export async function getTiffinVendorSubscriptions(token) {
   return subscriptions.data;
 }
 
-export async function cancelSubscription(id, token, isCustomer){
-    try{
-        const url=`${config.apiUrl}/subscription/${isCustomer ? 'customer' : 'tiffin-vendor'}/delete/${id}`
-        await axios.delete(url, {
-            headers:{
-                'x-auth-token': token
-            }
-        })
-    }
-    catch(ex){
-        if(ex===null) return null
-        return false
-    }
+export async function cancelSubscription(id, token, isCustomer) {
+  try {
+    const url = `${config.apiUrl}/subscription/${
+      isCustomer ? "customer" : "tiffin-vendor"
+    }/delete/${id}`;
+    await axios.delete(url, {
+      headers: {
+        "x-auth-token": token,
+      },
+    });
+  } catch (ex) {
+    if (ex === null) return null;
+    return false;
+  }
 }

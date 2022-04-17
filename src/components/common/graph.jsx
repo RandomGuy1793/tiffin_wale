@@ -12,8 +12,8 @@ export default function BarGraph(props) {
       {
         // Change type to "doughnut", "line", "splineArea", etc.
         type: "column",
-        
-        dataPoints
+
+        dataPoints,
       },
     ],
   };

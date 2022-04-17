@@ -21,7 +21,7 @@ function SubscriptionCard(props) {
     <div className="card shadow-sm">
       <div className="card-body">
         <h5
-          className={isCustomer ? "pointer name": "name"}
+          className={isCustomer ? "pointer name" : "name"}
           onClick={
             isCustomer ? () => navigate(`/customer/vendor/${vendorId}`) : null
           }

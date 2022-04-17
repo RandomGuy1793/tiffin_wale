@@ -20,10 +20,10 @@ function CustomerRegister(props) {
     pincode: "",
   });
   let navigate = useNavigate();
-  useEffect(()=>{
-    clearToken(props.updateToken)
+  useEffect(() => {
+    clearToken(props.updateToken);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   const handleChange = ({ currentTarget: input }) => {
     const cust = { ...customer };

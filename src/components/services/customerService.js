@@ -22,7 +22,7 @@ function makeCustomerToReceive(customer) {
 
 function removePrefixesFromError(ex) {
   ex.response.data = ex.response.data.replace("address.", "");
-  return ex.response
+  return ex.response;
 }
 
 export function getName(token) {
@@ -96,26 +96,26 @@ export async function editCustomer(customer, token, updateToken) {
   }
 }
 
-export async function addReview(review, token, id){
-  const reviewToSend={
+export async function addReview(review, token, id) {
+  const reviewToSend = {
     vendorId: id,
     rating: review["stars out of 5"],
-    review:{
+    review: {
       title: review.title,
-      text: review.details
-    }
-  }
-  if(reviewToSend.review.title==="" && reviewToSend.review.text==="") delete reviewToSend.review
-  try{
+      text: review.details,
+    },
+  };
+  if (reviewToSend.review.title === "" && reviewToSend.review.text === "")
+    delete reviewToSend.review;
+  try {
     await axios.post(`${config.apiUrl}/tiffin-vendor/review`, reviewToSend, {
-      headers:{
-        'x-auth-token': token
-      }
-    })
-    return true
-  }
-  catch(ex){
-    if(ex===null) return null
-    return ex.response
+      headers: {
+        "x-auth-token": token,
+      },
+    });
+    return true;
+  } catch (ex) {
+    if (ex === null) return null;
+    return ex.response;
   }
 }

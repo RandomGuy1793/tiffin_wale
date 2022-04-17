@@ -1,4 +1,4 @@
 {
-    "apiUrl": "https://tiffin-wale.herokuapp.com/api",
-    "localStorageKey": "tiffin_wale_state"
+  "apiUrl": "https://tiffin-wale.herokuapp.com/api",
+  "localStorageKey": "tiffin_wale_state"
 }
